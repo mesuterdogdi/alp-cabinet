@@ -1,21 +1,21 @@
-# Website structure
+# ALP Cabinet deployment
 
-The site uses separate static HTML documents. Cloudflare Pages serves these at extensionless URLs:
+## Cloudflare Worker (current hosting)
 
-| URL | Source |
-| --- | --- |
-| / | index.html |
-| /services | services.html |
-| /process | process.html |
-| /about | about.html |
-| /contact | contact.html |
+Worker name: `alp-cabinet`. Production branch: `main`.
 
-No framework, build command, or environment variables are needed. Keep the Cloudflare Pages build output directory set to the repository root (`/`). A top-level `404.html` handles unknown routes instead of showing the home page. `_redirects` redirects /approach to /process. Legacy home-page section links are redirected by script.js.
+- Build command: none
+- Deploy command: `npx wrangler deploy`
+- Root directory: `/`
 
-For local previews, use a static server with extensionless HTML support. Python's basic http.server can preview /services.html and the other .html files, but does not resolve /services automatically.
+`wrangler.jsonc` deploys the static website from the repository root. `.assetsignore` includes only the public HTML, styles, script, images, and Cloudflare header/redirect files. No backend entry point or build step is required.
 
-Shared assets: styles.css, script.js, logo.png, business-card.jpeg. Each HTML document includes its navigation and footer, so content and links work without JavaScript. JavaScript enables the mobile menu and redirects old section links.
+Routes: `/`, `/services`, `/process`, `/about`, `/contact`. Each route has its own HTML document. HTML handling serves `.html` files at extensionless URLs; unknown routes use `404.html`. `/approach` redirects to `/process`. Old section links redirect through script.js.
 
-The business provides cabinet installation. Customers may supply cabinets, or ALP Cabinet may provide them as part of the project. No online cabinet store is included. Contact links open the phone app, WhatsApp, or an email draft; there is no form backend.
+## Updating
 
-The kitchen visual comes from the supplied business card, is cropped with CSS, and is labeled inspiration. It is not presented as completed work.
+Push changes to `main`. In Cloudflare, check the Worker's build history for the new commit and deployment. If a build fails, open the build details and inspect its log. A successful GitHub commit alone does not confirm a successful Cloudflare deployment.
+
+## Content
+
+The business installs customer-supplied cabinets or provides cabinets as part of the installation project. Contact links open the phone app, WhatsApp, or an email draft. There is no contact form backend. The kitchen image is supplied business-card imagery labeled as inspiration.

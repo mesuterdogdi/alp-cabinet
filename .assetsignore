@@ -1,0 +1,8 @@
+*
+!/*.html
+!/styles.css
+!/script.js
+!/logo.png
+!/business-card.jpeg
+!/_headers
+!/_redirects

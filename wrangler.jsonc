@@ -1,0 +1,9 @@
+{
+  "name": "alp-cabinet",
+  "compatibility_date": "2026-11-18",
+  "assets": {
+    "directory": ".",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  }
+}
