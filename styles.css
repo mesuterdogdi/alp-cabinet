@@ -347,3 +347,16 @@ h1 > span { color: var(--gold); font-family: Georgia, serif; font-style: italic;
  .page-picker #nav a:hover { transform:translateX(2px); color:var(--gold); }
  }
 }
+
+.page-picker { margin-left:0; }
+.header-inner .header-call { display:flex; }
+.category-directory,.category-photos { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; }
+.category-directory a { display:flex; align-items:center; justify-content:space-between; gap:1rem; padding:1.5rem; border:1px solid var(--line); border-radius:4px; font-size:1.25rem; }
+.category-directory a:hover,.category-directory a:focus-visible { border-color:var(--gold); }
+.category-directory span,.gallery .page-heading > a { color:var(--gold); }
+.gallery .page-heading > a { display:inline-block; margin-bottom:1.4rem; }
+.category-photos figure { margin:0; }
+.category-photos img { width:100%; height:auto; border-radius:4px; }
+.category-photos figcaption { color:var(--muted); margin-top:.6rem; }
+@media(max-width:680px){ .category-directory,.category-photos { grid-template-columns:1fr; } .header-inner { gap:.5rem; } .header-inner .header-call { padding:.6rem; gap:.25rem; } .page-picker .menu-toggle { padding:.6rem; gap:.45rem; } }
+@media(max-width:430px){ .header-inner .brand span { display:none; } }

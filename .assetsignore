@@ -9,3 +9,6 @@
 !/_redirects
 
 !/gallery-*.webp
+
+!/gallery/
+!/gallery/*.html
