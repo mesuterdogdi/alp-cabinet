@@ -303,3 +303,19 @@ h1 > span { color: var(--gold); font-family: Georgia, serif; font-style: italic;
   .about-card { margin-bottom: 30px; }
   .footer-brand img { width: 50px; }
 }
+
+.page-picker { position:relative; margin-left:auto; }
+.page-picker .menu-toggle { display:flex; align-items:center; gap:1.4rem; padding:.7rem 1rem; background:#000; color:white; border:1px solid var(--line); border-left:3px solid var(--gold); cursor:pointer; }
+.page-picker .menu-toggle span { color:var(--gold); }
+.page-picker #nav { display:none; position:absolute; z-index:20; inset:100% 0 auto auto; width:13rem; padding:.5rem; background:#000; border:1px solid var(--line); box-shadow:0 16px 32px #0009; }
+.page-picker #nav.open { display:grid; gap:0; }
+.page-picker #nav a { padding:.7rem 1rem; font-size:.9rem; }
+.page-picker #nav a[aria-current]::after { inset:.8rem auto .8rem 0; width:2px; height:auto; }
+.page-picker #nav a:hover { background:#181611; }
+.cabinet-footer { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:start; gap:2rem; padding-block:1rem; }
+.cabinet-footer small { display:block; color:var(--muted); margin-top:.8rem; }
+.cabinet-footer nav { display:grid; grid-template-columns:repeat(2,auto); gap:.4rem 2rem; }
+.cabinet-footer a:hover { color:var(--gold); }
+.footer-contact { display:grid; gap:.2rem; border-left:2px solid var(--gold); padding-left:1rem; }
+.footer-contact a:first-child { color:var(--gold); }
+@media(max-width:600px){ .cabinet-footer { display:grid; gap:1.4rem; } }

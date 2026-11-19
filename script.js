@@ -1,26 +1,35 @@
 const menu = document.querySelector('#menu');
 const nav = document.querySelector('#nav');
-function closeMenu() {
-  nav.classList.remove('open');
-  menu.setAttribute('aria-expanded', 'false');
-  menu.innerHTML = 'Menu <span aria-hidden="true">+</span>';
-}
-menu.addEventListener('click', () => {
-  const open = menu.getAttribute('aria-expanded') !== 'true';
+const picker = menu.closest('.page-picker');
+let pinned = false;
+function showMenu(open) {
   nav.classList.toggle('open', open);
   menu.setAttribute('aria-expanded', String(open));
-  menu.innerHTML = (open ? 'Close' : 'Menu') + '<span aria-hidden="true">' + (open ? '&minus;' : '+') + '</span>';
+  menu.querySelector('span').textContent = open ? '−' : '+';
+  if (!open) pinned = false;
+}
+menu.addEventListener('click', () => {
+  pinned = !pinned;
+  showMenu(pinned);
 });
-document.addEventListener('keydown', event => {
-  if (event.key === 'Escape' && menu.getAttribute('aria-expanded') === 'true') {
-    closeMenu();
-    menu.focus();
-  }
+picker.addEventListener('pointerenter', event => {
+  if (event.pointerType === 'mouse') showMenu(true);
+});
+picker.addEventListener('pointerleave', () => {
+  if (!pinned && !nav.contains(document.activeElement)) showMenu(false);
+});
+picker.addEventListener('focusout', event => {
+  if (!picker.contains(event.relatedTarget)) showMenu(false);
 });
 document.addEventListener('click', event => {
-  if (!event.target.closest('.header-inner')) closeMenu();
+  if (!picker.contains(event.target)) showMenu(false);
 });
-window.matchMedia('(min-width: 981px)').addEventListener('change', closeMenu);
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && nav.classList.contains('open')) {
+    showMenu(false);
+    if (picker.contains(document.activeElement)) menu.focus();
+  }
+});
 document.querySelector('#year').textContent = new Date().getFullYear();
 const legacyRoutes = { '#services': '/services', '#approach': '/process', '#about': '/about', '#contact': '/contact' };
 if (location.pathname === '/' && legacyRoutes[location.hash]) location.replace(legacyRoutes[location.hash]);
