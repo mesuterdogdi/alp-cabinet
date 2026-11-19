@@ -7,3 +7,5 @@
 !/kitchen-inspiration.webp
 !/_headers
 !/_redirects
+
+!/gallery-*.webp
