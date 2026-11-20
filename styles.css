@@ -372,3 +372,17 @@ h1 > span { color: var(--gold); font-family: Georgia, serif; font-style: italic;
 .home-hero .kitchen-photo img { height:100%; object-fit:contain; }
 .photo-toggle { position:absolute; bottom:.85rem; right:.85rem; background:#000; color:white; border:1px solid #ffffff40; border-radius:5px; padding:.45rem .65rem; cursor:pointer; }
 .kitchen-photo figcaption { max-width:calc(100% - 7rem); font-size:.78rem; }
+
+@media (min-width:981px) {
+  .header-inner .header-call { order:1; }
+}
+.custom-services { display:block; }
+.custom-services ul { margin:.65rem 0 0; padding-left:1.3rem; }
+.home-hero .kitchen-photo img { position:absolute; inset:0; width:100%; }
+.kitchen-photo .photo-toggle { z-index:2; }
+@media (prefers-reduced-motion:no-preference) {
+  .kitchen-photo img { transition:opacity 1.2s ease-in-out, transform 4.5s ease-out; }
+  .kitchen-photo .entering { opacity:0; transform:scale(.985); }
+  .kitchen-photo .showing { opacity:1; transform:scale(1.015); }
+  .kitchen-photo .leaving { opacity:0; transform:scale(.99); transition-duration:1.2s; }
+}

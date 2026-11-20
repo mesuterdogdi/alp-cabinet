@@ -63,7 +63,8 @@ if (inspiration && inspiration.querySelector('.photo-toggle')) {
     "category": "Custom cabinet inspiration"
   }
 ];
-  const photo = inspiration.querySelector('img');
+  let photo = inspiration.querySelector('img');
+  let decoding = false;
   const caption = inspiration.querySelector('figcaption');
   const toggle = inspiration.querySelector('.photo-toggle');
   const motion = matchMedia('(prefers-reduced-motion: reduce)');
@@ -72,16 +73,27 @@ if (inspiration && inspiration.querySelector('.photo-toggle')) {
   let timer;
   let playing = !motion.matches;
   async function advance() {
+    if (decoding) return;
     if (!remaining.length) remaining = slides.map((_, i) => i).filter(i => i !== active);
     const pick = Math.floor(Math.random() * remaining.length);
     const [index] = remaining.splice(pick, 1);
     const slide = slides[index];
     const next = new Image();
     next.src = slide.src;
-    try { await next.decode(); } catch { return; }
+    decoding = true;
+    try { await next.decode(); } catch { return; } finally { decoding = false; }
     if (!playing || document.hidden) return;
-    photo.src = slide.src;
-    photo.alt = slide.alt;
+    const previous = photo;
+    previous.setAttribute('aria-hidden', 'true');
+    next.alt = slide.alt;
+    next.className = 'entering';
+    previous.after(next);
+    next.getBoundingClientRect(); // Establish the starting opacity before the crossfade.
+    next.className = 'showing';
+    previous.className = 'leaving';
+    if (motion.matches) previous.remove();
+    else setTimeout(() => previous.remove(), 1250);
+    photo = next;
     caption.textContent = slide.category + ' · ' + slide.alt;
     active = index;
   }
@@ -89,7 +101,7 @@ if (inspiration && inspiration.querySelector('.photo-toggle')) {
     clearInterval(timer);
     toggle.textContent = playing ? 'Pause' : 'Play';
     toggle.setAttribute('aria-label', toggle.textContent + ' gallery slideshow');
-    if (playing && !document.hidden) timer = setInterval(advance, 6500);
+    if (playing && !document.hidden) timer = setInterval(advance, 4500);
   }
   toggle.hidden = false;
   toggle.addEventListener('click', () => { playing = !playing; schedule(); });
